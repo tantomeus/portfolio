@@ -3,6 +3,7 @@ import { Roboto_Mono } from "next/font/google";
 
 import Nav from "@/components/Nav";
 import "./globals.css";
+import AOSInit from "@/components/AosInit";
 
 const roboto = Roboto_Mono({
   weight: ["400", "500", "600", "700"],
@@ -22,6 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
+      <AOSInit/>
       <body className={roboto.className}>
         <Nav/>
         {children}
