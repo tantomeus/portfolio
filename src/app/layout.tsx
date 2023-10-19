@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import { Roboto_Mono } from "next/font/google";
+import { nunito } from "./fonts";
 
 import Nav from "@/components/Nav";
 import "./globals.css";
 import AOSInit from "@/components/AosInit";
-
-const roboto = Roboto_Mono({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  display: "swap"
-});
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -24,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <AOSInit/>
-      <body className={roboto.className}>
+      <body className={nunito.className}>
         <Nav/>
         {children}
       </body>
