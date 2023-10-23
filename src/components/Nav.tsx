@@ -56,7 +56,7 @@ export default function Nav() {
 
     return (
     <nav ref={nav}
-    className="fixed top-0 z-50 flex flex-wrap items-center w-full px-6 py-4 transition duration-500 shadow-md lg:px-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md roboto-mono">
+    className="fixed top-0 z-[1000] flex flex-wrap items-center w-full px-6 py-4 transition duration-500 shadow-md lg:px-10 bg-slate-100/80 dark:bg-slate-900/80 backdrop-blur-md roboto-mono">
         <a data-aos="flip-up" data-aos-duration="700" className="nav-item" href="#">logo</a>
 
         <button onClick={handleOpenNav} aria-label="toggle navigation"
