@@ -1,0 +1,67 @@
+[
+    {
+        "name": "html",
+        "link":"",
+        "descr": "is a standard markup language used to create web pages."
+    },
+    {
+        "name": "css",
+        "link":"",
+        "descr": "is a style sheet language used to describe the presentation of a document written in HTML."
+    },
+    {
+        "name": "express",
+        "link":"",
+        "descr": "is a web application framework for Node.js. Have a set of features for building web applications."
+    },
+    {
+        "name": "javascript",
+        "link":"",
+        "descr": "is a programming language used to create interactive web pages and dynamic web applications."
+    },
+    {
+        "name": "typescript",
+        "link":"",
+        "descr": "is a superset of JavaScript that adds static typing and other features to the language."
+    },
+    {
+        "name": "react",
+        "link":"",
+        "descr": "is a JavaScript library for building user interfaces."
+    },
+    {
+        "name": "nextJS",
+        "link":"",
+        "descr": "is a framework for building server-side rendered React applications."
+    },
+    {
+        "name": "nodeJS",
+        "link":"",
+        "descr": "is a JavaScript runtime built on Chrome's V8 JavaScript engine. It allows developers to run JavaScript code outside of a web browser."
+    },
+    {
+        "name": "redux",
+        "link":"",
+        "descr": "is a state management library for JavaScript applications."
+    },
+    {
+        "name": "sass",
+        "link":"",
+        "descr": "is a CSS preprocessor that adds features such as variables, mixins, and nesting to CSS."
+    },
+    {
+        "name": "styledComponents",
+        "link":"",
+        "descr": "is a library that allows developers to write CSS code directly in their JavaScript files."
+    },
+    {
+        "name": "tailwind",
+        "link":"",
+        "descr": "is a utility-first CSS framework that provides a set of pre-defined classes for common styles."
+    },
+    {
+        "name": "postgreSQL",
+        "link":"",
+        "descr": "is an open-source relational database management system."
+    }
+]
