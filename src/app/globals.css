@@ -4,6 +4,16 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&display=swap');
 
+:root {
+  --scheme: dark;
+  color-scheme: var(--scheme);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
 @layer components {
   .nav-item {
     @apply font-semibold transition-colors text-slate-700 dark:text-slate-50 hover:bg-slate-600 hover:text-slate-50 dark:hover:bg-slate-50 dark:focus:bg-slate-50 dark:hover:text-slate-800 dark:focus:text-slate-800 focus:outline-none;
@@ -36,6 +46,15 @@
 
   .underscore {
     animation: underscore-animation 2s infinite;
+  }
+
+  .clip {
+    clip-path: polygon(0 0, 0 0, 0 0, 95% 0, 100% 25%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 0 100%, 0 100%, 0 100%);
+    transition: all 0.5s;
+  }
+
+  .clip-hover {
+      clip-path: polygon(0 0, 0 0, 0 0, 94.1% 0, 100% 30%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 0 100%, 0 100%, 0 100%);
   }
 
   /* ANIMATIONS */
