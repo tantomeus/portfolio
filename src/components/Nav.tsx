@@ -29,10 +29,13 @@ export default function Nav() {
 
     function handleToggleTheme(): void {
         const html = document.querySelector("html")!;
+
         if (html.className.includes("dark")) {
             html.className = "light";
+            html.style.setProperty("--scheme", "light");
         } else {
             html.className = "dark";
+            html.style.setProperty("--scheme", "dark");
         }
     }
 
