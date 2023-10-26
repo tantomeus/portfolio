@@ -2,15 +2,17 @@
 
 import { useRef, useState } from "react";
 import { Tool } from "@/types.js";
+import { TbDragDrop2 } from "react-icons/tb";
 
-import skills from "../skills.js"
+import tools from "public/tools.json";
 import Image from "next/image"
-import Modal from "./Modal";
 
-export default function SkillsList() {
+export default function ToolsList() {
     const [selected, setSelected] = useState<Tool | null>(null);
+    const [isBackSide, setIsBackSide] = useState(false);
+    const [isValidTarget, setIsValidTarget] = useState(false);
     
-    const ul = useRef(null);
+    const ul = useRef<HTMLElement[]>([]);
     const target = useRef(null);
 
     function moveTo({pageX, pageY}: {pageX: number, pageY: number}, li: HTMLElement) {
@@ -19,42 +21,47 @@ export default function SkillsList() {
     }
 
     function handleGrab(e: React.MouseEvent) {
-        const ulCur = ul.current! as HTMLElement;
         const targetCur = target.current! as HTMLElement;
+
         const li = (e.target as HTMLElement).closest("li")!;
-        const clone = li.cloneNode(true);
+        const clone = li.cloneNode(true) as HTMLElement;
+
+        ul.current.forEach((node) => {
+            if (node.dataset.name !== li.dataset.name) return;
+            node.style.opacity = "10%";
+        });
+        clone.style.opacity = "10%"
 
         li.style.cursor = "grabbing";
         li.style.position = "absolute";
         li.style.zIndex = "100";
+        li.style.opacity = "100%";
 
         li.nextElementSibling?.before(clone);
         document.body.append(li);
-
-        ulCur.querySelectorAll('li').forEach((node) => {
-            if (node.dataset.name !== li.dataset.name) return;
-            node.style.opacity = "10%";
-        });
 
         moveTo({pageX: e.pageX, pageY: e.pageY}, li);
 
         function mouseMove(e: MouseEvent) {
             moveTo({pageX: e.pageX, pageY: e.pageY}, li);
 
-            const below = document.elementFromPoint(e.clientX, e.clientY - li.offsetHeight)?.closest("div");
-            const child = targetCur.firstChild! as HTMLElement;
+            li.querySelector("div")!.hidden = true;
+            const below = document.elementFromPoint(e.clientX, e.clientY)?.closest(".target");
+            li.querySelector("div")!.hidden = false;
 
             if (below?.isEqualNode(targetCur)) {
-                child.classList.add("shadow-amber-500", "border-amber-500");
+                setIsValidTarget(true);
+
                 li.onmouseup = function() {
-                    const data = skills.find(skill => skill.name === li.dataset.name);
+                    const data = tools.find(tool => tool.name === li.dataset.name);
                     setSelected(data || null);
+                    setIsBackSide(true);
                     cleanUp();
                 };
             } else {
-                child.classList.remove("shadow-amber-500", "border-amber-500");
                 li.onmouseup = cleanUp;
-            }            
+                setIsValidTarget(false);
+            }
         }
         
         document.addEventListener("mousemove", mouseMove);
@@ -68,8 +75,10 @@ export default function SkillsList() {
             li.style.top = "";
             li.style.left = "";
 
-            ulCur.querySelectorAll('li').forEach(node => node.style.opacity = "");
-            ulCur.replaceChild(li, clone);
+            setIsValidTarget(false);
+
+            ul.current.forEach(node => node.style.opacity = "");
+            clone.replaceWith(li);
 
             li.onmouseleave = null;
             li.onmouseup = null;
@@ -85,37 +94,55 @@ export default function SkillsList() {
     }
 
     return (
-    <div  data-aos="zoom-in" data-aos-delay="500" data-aos-duration="700" className="space-y-4 overflow-x-clip roboto-mono">
-        {/* <div  data-aos="zoom-in" data-aos-offset="0" data-aos-duration="400"
-        className="flex items-center">
-            <hr className="grow"/>
-            <h3 className="px-2">I know</h3>
-            <hr className="grow"/>
-        </div> */}
+    <div data-aos="zoom-in" data-aos-delay="500" data-aos-duration="700"
+    className="w-full max-w-xl h-28">
 
-        {selected && <Modal tool={selected}/>}
-
-        {!selected && <ul ref={ul} className="relative flex justify-center w-fit icons-moving">
-            {[...skills, ...skills, ...skills].map((skill, i) => {
-                return <li data-name={skill.name} key={i} onMouseDown={handleGrab}
-                className="flex flex-col items-center px-2 cursor-grab">
-                    <div className="rounded-lg w-9 h-9 gradient-pink-y">
-                        <Image className="p-0.5 transition duration-300 ease-in-out opacity-75 hover:opacity-100"
-                        width={38}
-                        height={38}
-                        src={`/skills/${skill.name}.svg`}
-                        alt={skill.name}/>
+        <div className="w-full h-full flip-box">
+            <div style={{transform: isBackSide ? "rotateX(180deg)" : ""}} className="h-full flip-box-inner">
+                <div className="flex items-center h-full px-5 shadow-2xl flip-box-front dark:bg-slate-900 bg-slate-50">
+                    <div className="overflow-hidden">
+                        <ul className="relative flex justify-center w-fit icons-moving">
+                            {[...tools, ...tools, ...tools].map((tool, i) => {
+                                return <li ref={el => {
+                                    if (!el) return;
+                                    ul.current[i] = el;
+                                }} data-name={tool.name} key={i} onMouseDown={handleGrab}
+                                className={`flex flex-col items-center px-2 cursor-grab`}>
+                                    <div className="w-12 h-12 rounded-lg">
+                                        <Image className=""
+                                        width={48}
+                                        height={48}
+                                        src={`/tools/${tool.name}.svg`}
+                                        alt={tool.name}/>
+                                    </div>
+                                </li>
+                            })}
+                        </ul>
                     </div>
-                </li>
-            })}
-        </ul>}
 
-        {!selected && <div ref={target} className="flex items-end h-20 mx-auto w-14">
-            <div
-            className="w-10 h-10 mx-auto border rounded-lg shadow-xl gradient-pink-y">
+                    <div ref={target} className="flex items-center justify-center w-20 h-24 pl-4 border-l-2 target">
+                        <div
+                        className={`flex items-center justify-center w-10 h-10 mx-auto transition duration-500 rounded-lg 
+                        ${isValidTarget ? "border-amber-500" : ""}`}>
+                            <TbDragDrop2 className={`w-12 h-12 transition duration-300 ${isValidTarget ? "text-amber-500" : ""}`}/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="h-full shadow-2xl flip-box-back">
+                    <button aria-label="switch to the tools list" onClick={() => setIsBackSide(false)}
+                    className="absolute top-0 right-0 border-b-[28px] border-r-[28px] border-b-slate-50 dark:border-b-slate-900 border-r-transparent hover:border-r-[34px] hover:border-b-[34px] transition-all duration-500 z-50 peer"></button>
+
+                    {selected && (
+                    <div style={{background: "url(/image.jpg) center center / cover no-repeat"}}
+                        className="flex items-center justify-center w-full h-full p-3 text-base text-slate-50 clip peer-hover:clip-hover">
+                        <p className="px-3 text-base text-center bg-slate-900/80 first-letter:uppercase">{selected.name} {selected.descr}</p>
+                    </div>)}
+                </div>
+
             </div>
-        </div>}
-        
+        </div>
+
     </div>
     )
 }
