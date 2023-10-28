@@ -5,7 +5,7 @@ import TextReveal from "./TextReveal";
 export default function Projects() {
 
     return (
-    <section className="relative flex flex-col justify-center overflow-hidden bg-gradient-to-b from-slate-300 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+    <section className="relative flex flex-col justify-center overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-slate-900 dark:to-slate-800">
         <header className="relative flex justify-center grow">
             <div data-aos="slide-down" data-aos-duration="700" 
             className="absolute inset-0 gradient-green-y"></div>
@@ -26,12 +26,12 @@ export default function Projects() {
             <span className="text-3xl font-bold text-slate-50 dark:text-slate-700">010</span>
         </Bar>
 
-        <section className="py-32 mx-auto space-y-24 max-w-7xl px-28">
+        <section className="px-6 py-32 mx-auto space-y-24 xs:px-10 sm:px-20 max-w-7xl md:px-28">
             {[1,2,3,4,5].map((project, i) => <ProjectItem key={i} direction={i % 2 === 0 ? "left" : "right"}/>)}
         </section>
 
         <Bar color="light" position="left-10 lg:left-14 bottom-0" duration="700" delay="100" offset="200">
-            <span className="text-3xl font-bold text-slate-50 dark:text-slate-700">010</span>
+            <span className="text-3xl font-bold dark:text-slate-50 text-slate-700">010</span>
         </Bar>
     </section>
     )
