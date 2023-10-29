@@ -1,34 +1,19 @@
 "use client";
 
 import { FaMoon, FaSun, FaGlobe } from "react-icons/fa";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Nav() {
+    const [isOpen, setIsOpen] = useState(false);
+
     const nav = useRef<HTMLElement>(null);
-    const navList = useRef<HTMLDivElement>(null);
     
     function handleOpenNav(e: React.MouseEvent) {
-        const navListCur = navList.current!
-        const btn = (e.target as HTMLElement).closest("button")!;
-
-        btn.classList.toggle("hamburger-cross");
-
-        if (navListCur.classList.contains("hidden")) {
-            navListCur.classList.add("flex", "slide-down");
-            navListCur.classList.remove("hidden", "slide-up");
-        } else {
-            navListCur.classList.add("slide-up");
-            navListCur.classList.remove("slide-down");
-
-            setTimeout(() => {
-                navListCur.classList.add("hidden");
-                navListCur.classList.remove("flex");
-            }, 500);
-        }
+        setIsOpen((state) => !state);
     }
 
     function handleToggleTheme(): void {
-        const html = document.querySelector("html")!;
+        const html = document.documentElement!;
 
         if (html.className.includes("dark")) {
             html.className = "light";
@@ -63,14 +48,14 @@ export default function Nav() {
         <a data-aos="flip-up" data-aos-duration="700" className="nav-item" href="#">logo</a>
 
         <button onClick={handleOpenNav} aria-label="toggle navigation"
-        className="ml-auto space-y-1 md:hidden">
+        className={`ml-auto space-y-1 md:hidden ${isOpen ? "hamburger-cross" : ""}`}>
             <span className="block w-6 h-1 transition duration-500 rounded-sm bg-slate-800 dark:bg-slate-50"></span>
             <span className="block w-6 h-1 transition duration-500 rounded-sm bg-slate-800 dark:bg-slate-50"></span>
             <span className="block w-6 h-1 transition duration-500 rounded-sm bg-slate-800 dark:bg-slate-50"></span>
         </button>
 
-        <div ref={navList}
-        className="flex-wrap justify-center hidden min-w-full mt-4 md:flex grow sm:grow-0 md:mt-0 md:min-w-0 md:ml-auto">
+        <div
+        className={`flex-wrap justify-center min-w-full mt-4 md:flex grow sm:grow-0 md:mt-0 md:min-w-0 md:ml-auto ${isOpen ? "flex slide-down" : "hidden slide-up"}`}>
             <ul className="flex items-center gap-4 2xs:gap-9">
                 <li data-aos="zoom-in" data-aos-delay="200" data-aos-duration="700"><a className="nav-item" href="#about">About</a></li>
                 <li data-aos="zoom-in" data-aos-delay="300" data-aos-duration="700"><a className="nav-item" href="#project">Projects</a></li>
