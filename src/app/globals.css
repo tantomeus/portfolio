@@ -27,8 +27,8 @@ html {
     transition-duration: 0.25s;
   }
 
-  .input {
-    @apply absolute top-5 -translate-y-1/2 left-3 transition duration-200 peer-focus:scale-[80%] origin-top-left bg-slate-900 px-1 text-slate-600 peer-hover:text-slate-300  peer-focus:text-slate-50 peer-focus:translate-y-[-125%] pointer-events-none;
+  .label {
+    @apply absolute top-5 -translate-y-1/2 left-3 transition duration-200 peer-focus:scale-[80%] origin-top-left dark:bg-slate-900 px-1 dark:text-slate-600 dark:peer-hover:text-slate-300  dark:peer-focus:text-slate-50 peer-focus:translate-y-[-125%] pointer-events-none  bg-slate-100 text-slate-400 peer-hover:text-slate-800  peer-focus:text-slate-900;
   }
 
   .roboto-mono {
@@ -75,15 +75,6 @@ html {
 
   .flip-box-back {
     transform: rotateX(180deg);
-  }
-
-  .clip {
-    clip-path: polygon(0 0, 0 0, 0 0, 95% 0, 100% 25%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 0 100%, 0 100%, 0 100%);
-    transition: all 0.5s;
-  }
-
-  .clip-hover {
-      clip-path: polygon(0 0, 0 0, 0 0, 94.1% 0, 100% 30%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 0 100%, 0 100%, 0 100%);
   }
 
   /* ANIMATIONS */
