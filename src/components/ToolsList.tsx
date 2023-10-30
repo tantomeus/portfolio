@@ -5,7 +5,7 @@ import { Tool } from "@/types.js";
 import { TbDragDrop2 } from "react-icons/tb";
 
 import tools from "public/tools.json";
-import Image from "next/image"
+import Image from "next/image";
 
 export default function ToolsList() {
     const [selected, setSelected] = useState<Tool | null>(null);
@@ -20,7 +20,80 @@ export default function ToolsList() {
         li.style.top = pageY - li.offsetHeight / 2 + "px";
     }
 
-    function handleGrab(e: React.MouseEvent) {
+    function handleTouchGrab(e: React.TouchEvent) {
+        const targetCur = target.current! as HTMLElement;
+
+        const li = (e.target as HTMLElement).closest("li")!;
+        const clone = li.cloneNode(true) as HTMLElement;
+
+        ul.current.forEach((node) => {
+            if (node.dataset.name !== li.dataset.name) return;
+            node.style.opacity = "10%";
+        });
+        clone.style.opacity = "10%"
+
+        li.style.cursor = "grabbing";
+        li.style.position = "absolute";
+        li.style.zIndex = "100";
+        li.style.opacity = "100%";
+
+        li.nextElementSibling?.before(clone);
+        document.body.append(li);
+
+        moveTo({pageX: e.changedTouches[0].pageX, pageY: e.changedTouches[0].pageY}, li);
+
+        function touchMove(e: TouchEvent) {
+            moveTo({pageX: e.changedTouches[0].pageX, pageY: e.changedTouches[0].pageY}, li);
+
+            li.querySelector("div")!.hidden = true;
+            const below = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY)?.closest(".target");
+            li.querySelector("div")!.hidden = false;
+
+            if (below?.isEqualNode(targetCur)) {
+                setIsValidTarget(true);
+
+                li.ontouchend = function() {
+                    const data = tools.find(tool => tool.name === li.dataset.name);
+                    setSelected(data || null);
+                    setIsBackSide(true);
+                    cleanUp();
+                };
+            } else {
+                li.ontouchend = cleanUp;
+                setIsValidTarget(false);
+            }
+        }
+        
+        document.addEventListener("touchmove", touchMove);
+
+        function cleanUp() {
+            document.removeEventListener("touchmove", touchMove);
+
+            li.style.cursor = "";
+            li.style.position = "";
+            li.style.zIndex = "";
+            li.style.top = "";
+            li.style.left = "";
+
+            setIsValidTarget(false);
+
+            ul.current.forEach(node => node.style.opacity = "");
+            clone.replaceWith(li);
+
+            li.ontouchstart = null;
+            li.ontouchend = null;
+        }
+        
+        li.ontouchstart = cleanUp;
+
+        li.ontouchend = cleanUp;
+
+        li.ondragstart = function() {
+            return false;
+        };
+    }
+
+    function handleMouseGrab(e: React.MouseEvent) {
         const targetCur = target.current! as HTMLElement;
 
         const li = (e.target as HTMLElement).closest("li")!;
@@ -95,7 +168,7 @@ export default function ToolsList() {
 
     return (
     <div data-aos="zoom-in" data-aos-delay="500" data-aos-duration="700"
-    className="w-full max-w-xl h-28">
+    className="w-full max-w-xl h-20 sm:h-28">
 
         <div className="w-full h-full flip-box">
             <div style={{transform: isBackSide ? "rotateX(180deg)" : ""}} className="h-full flip-box-inner">
@@ -106,9 +179,9 @@ export default function ToolsList() {
                                 return <li ref={el => {
                                     if (!el) return;
                                     ul.current[i] = el;
-                                }} data-name={tool.name} key={i} onMouseDown={handleGrab}
+                                }} data-name={tool.name} key={i} onMouseDown={handleMouseGrab} onTouchStart={handleTouchGrab}
                                 className={`flex flex-col items-center px-2 cursor-grab`}>
-                                    <div className="w-12 h-12 rounded-lg">
+                                    <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg">
                                         <Image className=""
                                         width={48}
                                         height={48}
@@ -120,7 +193,7 @@ export default function ToolsList() {
                         </ul>
                     </div>
 
-                    <div ref={target} className="flex items-center justify-center w-20 h-24 pl-4 border-l-2 target">
+                    <div ref={target} className="flex items-center justify-center w-10 sm:w-20 h-16 sm:h-24 pl-4 border-l-2 target">
                         <div
                         className={`flex items-center justify-center w-10 h-10 mx-auto transition duration-500 rounded-lg 
                         ${isValidTarget ? "border-amber-500" : ""}`}>
@@ -129,13 +202,10 @@ export default function ToolsList() {
                     </div>
                 </div>
 
-                <div className="h-full shadow-2xl flip-box-back">
-                    <button aria-label="switch to the tools list" onClick={() => setIsBackSide(false)}
-                    className="absolute top-0 right-0 border-b-[28px] border-r-[28px] border-b-slate-50 dark:border-b-slate-900 border-r-transparent hover:border-r-[34px] hover:border-b-[34px] transition-all duration-500 z-50 peer"></button>
-
+                <div onClick={() => setIsBackSide(false)} className="h-full shadow-2xl flip-box-back cursor-pointer">
                     {selected && (
                     <div style={{background: "url(/image.jpg) center center / cover no-repeat"}}
-                        className="flex items-center justify-center w-full h-full p-3 text-base text-slate-50 clip peer-hover:clip-hover">
+                        className="flex items-center justify-center w-full h-full p-3 text-base text-slate-50">
                         <p className="px-3 text-base text-center bg-slate-900/80 first-letter:uppercase">{selected.name} {selected.descr}</p>
                     </div>)}
                 </div>
