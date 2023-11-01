@@ -1,6 +1,9 @@
 import Bar from "./Bar";
 import ProjectItem from "./ProjectItem";
 import TextReveal from "./TextReveal";
+import projects from "public/projects.json";
+
+import { Project } from "@/types";
 
 export default function Projects() {
 
@@ -23,15 +26,15 @@ export default function Projects() {
         </header>
 
         <Bar color="dark" position="right-10 lg:right-14 top-0" duration="700" delay="100" offset="200">
-            <span className="text-3xl font-bold text-slate-50 dark:text-slate-700">010</span>
+            <span className="text-3xl font-bold text-slate-50 dark:text-slate-700">011</span>
         </Bar>
 
         <section className="px-6 py-32 mx-auto space-y-24 xs:px-10 sm:px-20 max-w-7xl md:px-28">
-            {[1,2,3,4,5].map((project, i) => <ProjectItem key={i} direction={i % 2 === 0 ? "left" : "right"}/>)}
+            {projects.map((project: Project, i: number) => <ProjectItem key={i} direction={i % 2 === 0 ? "left" : "right"} project={project} />)}
         </section>
 
         <Bar color="light" position="left-10 lg:left-14 bottom-0" duration="700" delay="100" offset="200">
-            <span className="text-3xl font-bold dark:text-slate-50 text-slate-700">010</span>
+            <span className="text-3xl font-bold dark:text-slate-50 text-slate-700"></span>
         </Bar>
     </section>
     )
