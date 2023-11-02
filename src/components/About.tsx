@@ -5,11 +5,11 @@ import TextReveal from "./TextReveal";
 
 export default function About() {
     return (
-    <article id="about" className="relative flex items-center justify-center py-24 overflow-hidden bg-slate-50 bg-gradient-to-b dark:from-slate-800 dark:to-slate-700 dark:text-slate-50 text-slate-700">
+    <article id="about" className="relative flex items-center justify-center py-24 overflow-hidden from-slate-100 to-slate-200 bg-gradient-to-b dark:from-slate-800 dark:to-slate-700 dark:text-slate-50 text-slate-700">
         <div data-aos="slide-right" data-aos-offset="100" data-aos-duration="700" 
         className="absolute top-0 left-0 w-1/3 h-full gradient-pink-y lg:w-1/4"></div>
 
-        <div className="grid justify-items-center lg:justify-items-end grid-cols-1 lg:grid-cols-[1fr_2fr] gap-x-20 gap-y-10 z-10 px-8 sm:px-16 md:px-20">
+        <div className="grid justify-items-center lg:justify-items-end grid-cols-1 lg:grid-cols-[1fr_2fr] gap-x-20 gap-y-10 z-10 px-6 xs:px-8 sm:px-16 md:px-20">
             
             <TextReveal className="justify-self-end row-[2_/_3] lg:row-span-1 lg:col-span-full" delay={200}
             colors={{bg: "dark:bg-slate-50 bg-slate-800", text: "dark:text-slate-50 text-slate-800"}}>
