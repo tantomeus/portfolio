@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { Tool } from "@/types.js";
 import { TbDragDrop2 } from "react-icons/tb";
 
-import tools from "public/tools.json";
+import tools from "@public/tools.json";
 import Image from "next/image";
 
 export default function ToolsList() {

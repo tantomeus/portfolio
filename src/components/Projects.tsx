@@ -1,7 +1,7 @@
 import Bar from "./Bar";
 import ProjectItem from "./ProjectItem";
 import TextReveal from "./TextReveal";
-import projects from "public/projects.json";
+import projects from "@public/projects.json";
 
 import { Project } from "@/types";
 
