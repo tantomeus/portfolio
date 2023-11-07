@@ -12,7 +12,7 @@ export default function ProjectItem({ direction, project }: {direction: string, 
         <div className={isDirectionRight ? "lg:row-[1_/_2] lg:col-[2_/_3]" : ""}>
             <a data-aos="zoom-in" href={project.link} className="inline-block overflow-hidden rounded-md gradient-green-y">
                 <Image className="object-scale-down p-3 transition duration-300 ease-in-out opacity-50 hover:blur-0 hover:opacity-100"
-                width={520} height={300} src={project.image} alt="screenshot"/>
+                width={520} height={300} src="/image.jpg" alt="screenshot"/>
             </a>
 
             <div data-aos="flip-up" data-aos-delay="200"
@@ -37,7 +37,7 @@ export default function ProjectItem({ direction, project }: {direction: string, 
             className="font-semibold text-slate-600 dark:text-slate-300 ">{project.description}</p>
 
             <ul data-aos={`fade-${direction}`} data-aos-delay="600"
-            className="flex gap-2 text-sm font-semibold lowercase text-slate-100 dark:text-slate-700 roboto-mono">
+            className="flex flex-wrap gap-2 text-sm font-semibold lowercase text-slate-100 dark:text-slate-700 roboto-mono">
                 {project.tools.map((tool) => <li key={tool} className="shadow-md rounded-md px-3 py-1.5 bg-slate-700 text-slate-50">{tool}</li>)}
             </ul>
         </div>
