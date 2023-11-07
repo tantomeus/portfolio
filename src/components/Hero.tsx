@@ -18,7 +18,7 @@ export default function Hero() {
                 </div>
 
                 <TextReveal delay={1500} colors={{bg: "dark:bg-slate-50 bg-slate-800", text: "dark:text-slate-50 text-slate-800"}}>
-                    <p className="text-lg font-semibold text-yellow-400 xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl roboto-mono">
+                    <p className="text-lg font-semibold text-yellow-400 xs:text-2xl md:text-3xl lg:text-4xl xl:text-5xl roboto-mono">
                         <span className="text-green-400 dark:text-green-200">console.</span>
                         <span className="text-blue-500 dark:text-blue-400">log</span>
                         (<span className="text-green-400 dark:text-green-100">&quot;Hello there!&quot;</span>)<span className="text-green-400 dark:text-green-100">;</span>
